@@ -3,27 +3,15 @@
 $_['heading_title']       = 'Product Returns';
 
 // Text
+$_['text_success']        = 'Success: You have modified returns!';
+$_['text_list']           = 'Product Return List';
+$_['text_add']            = 'Add Product Return';
+$_['text_edit']           = 'Edit Product Return';
 $_['text_opened']         = 'Opened';
 $_['text_unopened']       = 'Unopened';
-$_['text_success']        = 'Success: You have modified returns!';
-$_['text_wait']           = 'Please Wait!';
-
-// Text
-$_['text_return_id']      = 'Return ID:';
-$_['text_order_id']       = 'Order ID:';
-$_['text_date_ordered']   = 'Order Date:';
-$_['text_customer']       = 'Customer:';
-$_['text_email']          = 'E-Mail:';
-$_['text_telephone']      = 'Telephone:';
-$_['text_return_status']  = 'Return Status:';
-$_['text_date_added']     = 'Date Added:';
-$_['text_date_modified']  = 'Date Modified:';
-$_['text_product']        = 'Product:';
-$_['text_model']          = 'Model:';
-$_['text_quantity']       = 'Quantity:';
-$_['text_return_reason']  = 'Return Reason:';
-$_['text_return_action']  = 'Return Action:';
-$_['text_comment']        = 'Comment:';
+$_['text_order']          = 'Order Information';
+$_['text_product']        = 'Product Information &amp; Reason for Return';
+$_['text_history']        = 'Add Return History';
 
 // Column
 $_['column_return_id']     = 'Return ID';
@@ -49,12 +37,15 @@ $_['entry_telephone']     = 'Telephone';
 $_['entry_product']       = 'Product';
 $_['entry_model']         = 'Model';
 $_['entry_quantity']      = 'Quantity';
-$_['entry_reason']        = 'Return Reason';
 $_['entry_opened']        = 'Opened';
 $_['entry_comment']       = 'Comment';
-$_['entry_status']        = 'Return Status';
+$_['entry_return_reason'] = 'Return Reason';
+$_['entry_return_action'] = 'Return Action';
+$_['entry_return_status'] = 'Return Status';
 $_['entry_notify']        = 'Notify Customer';
-$_['entry_action']        = 'Return Action';
+$_['entry_return_id']     = 'Return ID';
+$_['entry_date_added']    = 'Date Added';
+$_['entry_date_modified'] = 'Date Modified';
 
 // Help
 $_['help_product']        = '(Autocomplete)';
@@ -69,4 +60,3 @@ $_['error_email']         = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']     = 'Telephone must be between 3 and 32 characters!';
 $_['error_product']       = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_model']         = 'Product Model must be greater than 3 and less than 64 characters!';
-?>

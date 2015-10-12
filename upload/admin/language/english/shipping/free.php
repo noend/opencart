@@ -2,9 +2,10 @@
 // Heading
 $_['heading_title']    = 'Free Shipping';
 
-// Text 
+// Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified free shipping!';
+$_['text_edit']        = 'Edit Free Shipping';
 
 // Entry
 $_['entry_total']      = 'Total';
@@ -17,4 +18,3 @@ $_['help_total']       = 'Sub-Total amount needed before the free shipping modul
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify free shipping!';
-?>

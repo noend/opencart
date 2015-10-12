@@ -26,6 +26,10 @@
 /upload/system/download/*
 !/upload/system/download/index.html
 
+# Upload Files
+/upload/system/upload/*
+!/upload/system/upload/index.html
+
 !/upload/data/index.html
 
 # Flags 
@@ -40,3 +44,6 @@
 # /upload/backup.install/*
 # /upload/install/*
 
+# Ignore all vendor files included by composer and the lock file
+/tests/phpunit/vendor/*
+/tests/phpunit/composer.lock

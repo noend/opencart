@@ -1,17 +1,22 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="<?php echo $shipping; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="<?php echo $edit; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="box-content">
-      <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="btn"><?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <div class="tabbable tabs-left">
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+      </div>
+      <div class="panel-body">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-order" data-toggle="tab"><?php echo $tab_order; ?></a></li>
           <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
@@ -20,13 +25,16 @@
           <?php } ?>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
           <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+          <?php if ($payment_action) { ?>
+          <li><a href="#tab-action" data-toggle="tab"><?php echo $tab_action; ?></a></li>
+          <?php } ?>
           <?php if ($maxmind_id) { ?>
           <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
           <?php } ?>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-order">
-            <table class="form">
+            <table class="table table-bordered">
               <tr>
                 <td><?php echo $text_order_id; ?></td>
                 <td>#<?php echo $order_id; ?></td>
@@ -36,7 +44,7 @@
                 <td><?php if ($invoice_no) { ?>
                   <?php echo $invoice_no; ?>
                   <?php } else { ?>
-                  <span id="invoice"><b>[</b> <a id="invoice-generate"><?php echo $text_generate; ?></a> <b>]</b></span>
+                  <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -45,12 +53,12 @@
               </tr>
               <tr>
                 <td><?php echo $text_store_url; ?></td>
-                <td><a href="<?php echo $store_url; ?>" target="_blank"><u><?php echo $store_url; ?></u></a></td>
+                <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_url; ?></a></td>
               </tr>
               <?php if ($customer) { ?>
               <tr>
                 <td><?php echo $text_customer; ?></td>
-                <td><a href="<?php echo $customer; ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a></td>
+                <td><a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a></td>
               </tr>
               <?php } else { ?>
               <tr>
@@ -66,7 +74,7 @@
               <?php } ?>
               <tr>
                 <td><?php echo $text_email; ?></td>
-                <td><?php echo $email; ?></td>
+                <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
               </tr>
               <tr>
                 <td><?php echo $text_telephone; ?></td>
@@ -78,25 +86,24 @@
                 <td><?php echo $fax; ?></td>
               </tr>
               <?php } ?>
+              <?php foreach ($account_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <tr>
                 <td><?php echo $text_total; ?></td>
-                <td><?php echo $total; ?>
-                  <?php if ($customer && $credit) { ?>
-                  <?php if (!$credit_total) { ?>
-                  <span id="credit"><b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b></span>
-                  <?php } else { ?>
-                  <span id="credit"><b>[</b> <a id="credit-remove"><?php echo $text_credit_remove; ?></a> <b>]</b></span>
-                  <?php } ?>
-                  <?php } ?></td>
+                <td><?php echo $total; ?></td>
               </tr>
               <?php if ($customer && $reward) { ?>
               <tr>
                 <td><?php echo $text_reward; ?></td>
                 <td><?php echo $reward; ?>
                   <?php if (!$reward_total) { ?>
-                  <span id="reward"><b>[</b> <a id="reward-add"><?php echo $text_reward_add; ?></a> <b>]</b></span>
+                  <button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>
                   <?php } else { ?>
-                  <span id="reward"><b>[</b> <a id="reward-remove"><?php echo $text_reward_remove; ?></a> <b>]</b></span>
+                  <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_reward_remove; ?></button>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -121,9 +128,9 @@
                 <td><?php echo $text_commission; ?></td>
                 <td><?php echo $commission; ?>
                   <?php if (!$commission_total) { ?>
-                  <span id="commission"><b>[</b> <a id="commission-add"><?php echo $text_commission_add; ?></a> <b>]</b></span>
+                  <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_commission_add; ?></button>
                   <?php } else { ?>
-                  <span id="commission"><b>[</b> <a id="commission-remove"><?php echo $text_commission_remove; ?></a> <b>]</b></span>
+                  <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_remove; ?></button>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -162,7 +169,7 @@
             </table>
           </div>
           <div class="tab-pane" id="tab-payment">
-            <table class="form">
+            <table class="table table-bordered">
               <tr>
                 <td><?php echo $text_firstname; ?></td>
                 <td><?php echo $payment_firstname; ?></td>
@@ -211,6 +218,12 @@
                 <td><?php echo $text_country; ?></td>
                 <td><?php echo $payment_country; ?></td>
               </tr>
+              <?php foreach ($payment_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <tr>
                 <td><?php echo $text_payment_method; ?></td>
                 <td><?php echo $payment_method; ?></td>
@@ -219,7 +232,7 @@
           </div>
           <?php if ($shipping_method) { ?>
           <div class="tab-pane" id="tab-shipping">
-            <table class="form">
+            <table class="table table-bordered">
               <tr>
                 <td><?php echo $text_firstname; ?></td>
                 <td><?php echo $shipping_firstname; ?></td>
@@ -268,6 +281,12 @@
                 <td><?php echo $text_country; ?></td>
                 <td><?php echo $shipping_country; ?></td>
               </tr>
+              <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <?php if ($shipping_method) { ?>
               <tr>
                 <td><?php echo $text_shipping_method; ?></td>
@@ -278,20 +297,20 @@
           </div>
           <?php } ?>
           <div class="tab-pane" id="tab-product">
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-bordered">
               <thead>
                 <tr>
-                  <td class="left"><?php echo $column_product; ?></td>
-                  <td class="left"><?php echo $column_model; ?></td>
-                  <td class="right"><?php echo $column_quantity; ?></td>
-                  <td class="right"><?php echo $column_price; ?></td>
-                  <td class="right"><?php echo $column_total; ?></td>
+                  <td class="text-left"><?php echo $column_product; ?></td>
+                  <td class="text-left"><?php echo $column_model; ?></td>
+                  <td class="text-right"><?php echo $column_quantity; ?></td>
+                  <td class="text-right"><?php echo $column_price; ?></td>
+                  <td class="text-right"><?php echo $column_total; ?></td>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($products as $product) { ?>
                 <tr>
-                  <td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+                  <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
                     <?php foreach ($product['option'] as $option) { ?>
                     <br />
                     <?php if ($option['type'] != 'file') { ?>
@@ -300,82 +319,74 @@
                     &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
                     <?php } ?>
                     <?php } ?></td>
-                  <td class="left"><?php echo $product['model']; ?></td>
-                  <td class="right"><?php echo $product['quantity']; ?></td>
-                  <td class="right"><?php echo $product['price']; ?></td>
-                  <td class="right"><?php echo $product['total']; ?></td>
+                  <td class="text-left"><?php echo $product['model']; ?></td>
+                  <td class="text-right"><?php echo $product['quantity']; ?></td>
+                  <td class="text-right"><?php echo $product['price']; ?></td>
+                  <td class="text-right"><?php echo $product['total']; ?></td>
                 </tr>
                 <?php } ?>
                 <?php foreach ($vouchers as $voucher) { ?>
                 <tr>
-                  <td class="left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
-                  <td class="left"></td>
-                  <td class="right">1</td>
-                  <td class="right"><?php echo $voucher['amount']; ?></td>
-                  <td class="right"><?php echo $voucher['amount']; ?></td>
+                  <td class="text-left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
+                  <td class="text-left"></td>
+                  <td class="text-right">1</td>
+                  <td class="text-right"><?php echo $voucher['amount']; ?></td>
+                  <td class="text-right"><?php echo $voucher['amount']; ?></td>
                 </tr>
                 <?php } ?>
-              </tbody>
-              <?php foreach ($totals as $totals) { ?>
-              <tbody id="totals">
+                <?php foreach ($totals as $total) { ?>
                 <tr>
-                  <td colspan="4" class="right"><?php echo $totals['title']; ?>:</td>
-                  <td class="right"><?php echo $totals['text']; ?></td>
-                </tr>
-              </tbody>
-              <?php } ?>
-            </table>
-            <?php if ($downloads) { ?>
-            <h3><?php echo $text_download; ?></h3>
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="left"><b><?php echo $column_download; ?></b></td>
-                  <td class="left"><b><?php echo $column_filename; ?></b></td>
-                  <td class="right"><b><?php echo $column_remaining; ?></b></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($downloads as $download) { ?>
-                <tr>
-                  <td class="left"><?php echo $download['name']; ?></td>
-                  <td class="left"><?php echo $download['filename']; ?></td>
-                  <td class="right"><?php echo $download['remaining']; ?></td>
+                  <td colspan="4" class="text-right"><?php echo $total['title']; ?>:</td>
+                  <td class="text-right"><?php echo $total['text']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
             </table>
-            <?php } ?>
           </div>
           <div class="tab-pane" id="tab-history">
             <div id="history"></div>
-            <table class="form">
-              <tr>
-                <td><?php echo $entry_order_status; ?></td>
-                <td><select name="order_status_id">
-                    <?php foreach ($order_statuses as $order_statuses) { ?>
-                    <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
-                    <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_notify; ?></td>
-                <td><input type="checkbox" name="notify" value="1" /></td>
-              </tr>
-              <tr>
-                <td><?php echo $entry_comment; ?></td>
-                <td><textarea name="comment" cols="40" rows="8" style="width: 99%"></textarea>
-                  <div style="margin-top: 10px; text-align: right;"><a id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></a></div></td>
-              </tr>
-            </table>
+            <br />
+            <fieldset>
+              <legend><?php echo $text_history; ?></legend>
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+                  <div class="col-sm-10">
+                    <select name="order_status_id" id="input-order-status" class="form-control">
+                      <?php foreach ($order_statuses as $order_statuses) { ?>
+                      <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
+                      <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+                  <div class="col-sm-10">
+                    <input type="checkbox" name="notify" value="1" id="input-notify" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+                  </div>
+                </div>
+              </form>
+              <div class="text-right">
+                <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
+              </div>
+            </fieldset>
           </div>
+          <?php if ($payment_action) { ?>
+          <div class="tab-pane" id="tab-action"> <?php echo $payment_action; ?> </div>
+          <?php } ?>
           <?php if ($maxmind_id) { ?>
           <div class="tab-pane" id="tab-fraud">
-            <table class="form">
+            <table class="table table-bordered">
               <?php if ($country_match) { ?>
               <tr>
                 <td><?php echo $text_country_match; ?></td>
@@ -683,255 +694,237 @@
       </div>
     </div>
   </div>
-</div>
-<script type="text/javascript"><!--
-$('#invoice-generate').on('click', function() {
+  <script type="text/javascript"><!--
+$(document).delegate('#button-invoice', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#invoice').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');	
+			$('#button-invoice').button('loading');			
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('#button-invoice').button('reset');
 		},
 		success: function(json) {
-			$('.success, .warning').remove();
+			$('.alert').remove();
 						
 			if (json['error']) {
-				$('#tab-order').prepend('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
+				$('#tab-order').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
-			if (json.invoice_no) {
-				$('#invoice').fadeOut('slow', function() {
-					$('#invoice').html(json['invoice_no']);
-					
-					$('#invoice').fadeIn('slow');
-				});
+			if (json['invoice_no']) {
+				$('#button-invoice').replaceWith(json['invoice_no']);
 			}
-		}
-	});
-});
-
-$('#credit-add').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/addcredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#credit').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
-		},
-		complete: function() {
-			$('.loading').remove();
 		},			
-		success: function(json) {
-			$('.success, .warning').remove();
-			
-			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
-			}
-			
-			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.success').fadeIn('slow');
-				
-				$('#credit').html('<b>[</b> <a id="credit-remove"><?php echo $text_credit_remove; ?></a> <b>]</b>');
-			}
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
 
-$('#credit-remove').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/removecredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#credit').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
-		},
-		complete: function() {
-			$('.loading').remove();
-		},			
-		success: function(json) {
-			$('.success, .warning').remove();
-						
-			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
-			}
-			
-			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.success').fadeIn('slow');
-				
-				$('#credit').html('<b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b>');
-			}
-		}
-	});
-});
-
-$('#reward-add').on('click', function() {
+$(document).delegate('#button-reward-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addreward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#reward').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+			$('#button-reward-add').button('loading');
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('#button-reward-add').button('reset');
 		},									
 		success: function(json) {
-			$('.success, .warning').remove();
+			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('.success').fadeIn('slow');
-
-				$('#reward').html('<b>[</b> <a id="reward-remove"><?php echo $text_reward_remove; ?></a> <b>]</b>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_reward_remove; ?></button>');
 			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
 
-$('#reward-remove').on('click', function() {
+$(document).delegate('#button-reward-remove', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removereward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#reward').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-reward-remove').button('loading');
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('#button-reward-remove').button('reset');
 		},				
 		success: function(json) {
-			$('.success, .warning').remove();
+			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('.success').fadeIn('slow');
-				
-				$('#reward').html('<b>[</b> <a id="reward-add"><?php echo $text_reward_add; ?></a> <b>]</b>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>');
 			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
 
-$('#commission-add').on('click', function() {
+$(document).delegate('#button-commission-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addcommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#commission').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+			$('#button-commission-add').button('loading');
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('#button-commission-add').button('reset');
 		},			
 		success: function(json) {
-			$('.success, .warning').remove();
+			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.success').fadeIn('slow');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
                 
-				$('#commission').html('<b>[</b> <a id="commission-remove"><?php echo $text_commission_remove; ?></a> <b>]</b>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_remove; ?></button>');
 			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
 
-$('#commission-remove').on('click', function() {
+$(document).delegate('#button-commission-remove', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removecommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#commission').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');			
+			$('#button-commission-remove').button('loading');
+		
 		},
 		complete: function() {
-			$('.loading').remove();
-		},			
+			$('#button-commission-remove').button('reset');
+		},		
 		success: function(json) {
-			$('.success, .warning').remove();
+			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.warning').fadeIn('slow');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('.success').fadeIn('slow');
-				
-				$('#commission').html('<b>[</b> <a id="commission-add"><?php echo $text_commission_add; ?></a> <b>]</b>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-success btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_add; ?></button>');
 			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
 
-$('#history .pagination a').on('click', function() {
-	$('#history').load(this.href);
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#history').load(this.href);
 });			
 
 $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
 $('#button-history').on('click', function() {
+  if(typeof verifyStatusChange == 'function'){
+    if(verifyStatusChange() == false){
+      return false;
+    }else{
+      addOrderInfo();
+    }
+  }else{
+    addOrderInfo();
+  }
+
 	$.ajax({
-		url: 'index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/history&order_id=<?php echo $order_id; ?>',
 		type: 'post',
-		dataType: 'html',
-		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		dataType: 'json',
+		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('.success, .warning').remove();
-			$('#button-history').attr('disabled', true);
-			$('#history').prepend('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+			$('#button-history').button('loading');			
 		},
 		complete: function() {
-			$('#button-history').attr('disabled', false);
-			$('.attention').remove();
+			$('#button-history').button('reset');	
 		},
-		success: function(html) {
-			$('#history').html(html);
+		success: function(json) {
+			$('.alert').remove();
 			
-			$('textarea[name=\'comment\']').val('');
-			
-			$('#order-status').html($('select[name=\'order_status_id\'] option:selected').text());
+			if (json['error']) {
+				$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			} 
+		
+			if (json['success']) {
+				$('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+				
+				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('textarea[name=\'comment\']').val('');
+				
+				$('#order-status').html($('select[name=\'order_status_id\'] option:selected').text());			
+			}			
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
-//--></script> 
-<?php echo $footer; ?>
+
+function changeStatus(){
+  var status_id = $('select[name="order_status_id"]').val();
+
+  $('#openbay-info').remove();
+
+  $.ajax({
+    url: 'index.php?route=extension/openbay/getorderinfo&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&status_id='+status_id,
+    dataType: 'html',
+    success: function(html) {
+      $('#history').after(html);
+    }
+  });
+}
+
+function addOrderInfo(){
+  var status_id = $('select[name="order_status_id"]').val();
+
+  $.ajax({
+    url: 'index.php?route=extension/openbay/addorderinfo&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&status_id='+status_id,
+    type: 'post',
+    dataType: 'html',
+    data: $(".openbay-data").serialize()
+  });
+}
+
+$(document).ready(function() {
+  changeStatus();
+});
+
+$('select[name="order_status_id"]').change(function(){ changeStatus(); });
+//--></script></div>
+<?php echo $footer; ?> 

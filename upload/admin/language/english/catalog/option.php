@@ -4,6 +4,9 @@ $_['heading_title']       = 'Options';
 
 // Text
 $_['text_success']        = 'Success: You have modified options!';
+$_['text_list']           = 'Option List';
+$_['text_add']            = 'Add Option';
+$_['text_edit']           = 'Edit Option';
 $_['text_choose']         = 'Choose';
 $_['text_select']         = 'Select';
 $_['text_radio']          = 'Radio';
@@ -16,9 +19,6 @@ $_['text_file']           = 'File';
 $_['text_date']           = 'Date';
 $_['text_datetime']       = 'Date &amp; Time';
 $_['text_time']           = 'Time';
-$_['text_image_manager']  = 'Image Manager';
-$_['text_browse']         = 'Browse';
-$_['text_clear']          = 'Clear';
 
 // Column
 $_['column_name']         = 'Option Name';
@@ -38,4 +38,3 @@ $_['error_name']          = 'Option Name must be between 1 and 128 characters!';
 $_['error_type']          = 'Warning: Option Values required!';
 $_['error_option_value']  = 'Option Value Name must be between 1 and 128 characters!';
 $_['error_product']       = 'Warning: This option cannot be deleted as it is currently assigned to %s products!';
-?>

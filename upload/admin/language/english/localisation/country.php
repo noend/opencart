@@ -1,9 +1,12 @@
 <?php
 // Heading
-$_['heading_title']           = 'Country';
+$_['heading_title']           = 'Countries';
 
 // Text
 $_['text_success']            = 'Success: You have modified countries!';
+$_['text_list']               = 'Country List';
+$_['text_add']                = 'Add Country';
+$_['text_edit']               = 'Edit Country';
 
 // Column
 $_['column_name']             = 'Country Name';
@@ -31,4 +34,3 @@ $_['error_address']           = 'Warning: This country cannot be deleted as it i
 $_['error_affiliate']         = 'Warning: This country cannot be deleted as it is currently assigned to %s affiliates!';
 $_['error_zone']              = 'Warning: This country cannot be deleted as it is currently assigned to %s zones!';
 $_['error_zone_to_geo_zone']  = 'Warning: This country cannot be deleted as it is currently assigned to %s zones to geo zones!';
-?>

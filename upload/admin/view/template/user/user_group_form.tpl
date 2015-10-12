@@ -1,71 +1,81 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-user-group" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons">
-          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-        <div class="control-group required">
-          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-          <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
-            <?php if ($error_name) { ?>
-            <span class="error"><?php echo $error_name; ?></span>
-            <?php  } ?>
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="control-label"><?php echo $entry_access; ?></div>
-          <div class="controls">
-            <div class="well well-small scrollbox">
-              <?php foreach ($permissions as $permission) { ?>
-              <label class="checkbox">
-                <?php if (in_array($permission, $access)) { ?>
-                <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" checked="checked" />
-                <?php echo $permission; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" />
-                <?php echo $permission; ?>
-                <?php } ?>
-              </label>
-              <?php } ?>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user-group" class="form-horizontal">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+              <?php if ($error_name) { ?>
+              <div class="text-danger"><?php echo $error_name; ?></div>
+              <?php  } ?>
             </div>
-            <p><a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></p>
           </div>
-        </div>
-        <div class="control-group">
-          <div class="control-label"><?php echo $entry_modify; ?></div>
-          <div class="controls">
-            <div class="well well-small scrollbox">
-              <?php foreach ($permissions as $permission) { ?>
-              <label class="checkbox">
-                <?php if (in_array($permission, $modify)) { ?>
-                <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" checked="checked" />
-                <?php echo $permission; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" />
-                <?php echo $permission; ?>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_access; ?></label>
+            <div class="col-sm-10">
+              <div class="well well-sm" style="height: 150px; overflow: auto;">
+                <?php foreach ($permissions as $permission) { ?>
+                <div class="checkbox">
+                  <label>
+                    <?php if (in_array($permission, $access)) { ?>
+                    <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" checked="checked" />
+                    <?php echo $permission; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" />
+                    <?php echo $permission; ?>
+                    <?php } ?>
+                  </label>
+                </div>
                 <?php } ?>
-              </label>
-              <?php } ?>
-            </div>
-            <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find('[type=\'checkbox\']').attr('checked', false);"><?php echo $text_unselect_all; ?></a></div>
-        </div>
-      </form>
+              </div>
+              <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_modify; ?></label>
+            <div class="col-sm-10">
+              <div class="well well-sm" style="height: 150px; overflow: auto;">
+                <?php foreach ($permissions as $permission) { ?>
+                <div class="checkbox">
+                  <label>
+                    <?php if (in_array($permission, $modify)) { ?>
+                    <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" checked="checked" />
+                    <?php echo $permission; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" />
+                    <?php echo $permission; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+                <?php } ?>
+              </div>
+              <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

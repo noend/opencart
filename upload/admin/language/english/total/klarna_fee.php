@@ -5,6 +5,7 @@ $_['heading_title']    = 'Klarna Fee';
 // Text
 $_['text_total']       = 'Order Totals';
 $_['text_success']     = 'Success: You have modified Klarna fee total!';
+$_['text_edit']        = 'Edit Klarna Fee Total';
 $_['text_sweden']      = 'Sweden';
 $_['text_norway']      = 'Norway';
 $_['text_finland']     = 'Finland';
@@ -21,4 +22,3 @@ $_['entry_sort_order'] = 'Sort Order';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Klarna fee total!';
-?>

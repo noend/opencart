@@ -5,6 +5,7 @@ $_['heading_title']    = 'Citylink';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified Citylink shipping!';
+$_['text_edit']        = 'Edit Citylink Shipping';
 
 // Entry
 $_['entry_rate']       = 'Citylink Rates';
@@ -18,4 +19,3 @@ $_['help_rate']        = 'Enter values upto 5,2 decimal places. (12345.67) Examp
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Citylink shipping!';
-?>

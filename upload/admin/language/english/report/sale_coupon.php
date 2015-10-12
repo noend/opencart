@@ -1,6 +1,9 @@
 <?php
 // Heading
-$_['heading_title']    = 'Coupon Report';
+$_['heading_title']    = 'Coupons Report';
+
+// Text
+$_['text_list']        = 'Coupon List';
 
 // Column
 $_['column_name']      = 'Coupon Name';
@@ -12,4 +15,3 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_date_start'] = 'Date Start';
 $_['entry_date_end']   = 'Date End';
-?>
